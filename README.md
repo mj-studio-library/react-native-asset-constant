@@ -8,9 +8,9 @@ There is only about icon currently, but I will add string, fonts etc... later
 We may want to image asset like following
 
 ```tsx
-<Image source={IC_MYICON} />
-...
 import { IC_MYICON } from '../../utils/Icons';
+...
+<Image source={IC_MYICON} />
 ```
 
 instead
@@ -134,12 +134,12 @@ done
 
 cp temp_image $ICON_FILE
 
-rm -rf temp_image
+rm temp_image
 
 ```
 
 ### 2. write and enjoy command in your `package.json`
 
 ```json
-"icon": "sh ./script/image_generate.sh ./assets/icons ./src/utils/Icons.ts",
+"icon": "sh ./script/icon_constant.sh your/asset/path ./src/utils/Icons.ts",
 ```
