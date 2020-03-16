@@ -183,7 +183,7 @@ _ko.json_
 }
 ```
 
-### 2. Prepare util methods from [dooboolab exmaple reference](https://github.com/dooboolab/hackatalk-mobile/blob/master/STRINGS.ts)
+### 2. Prepare util methods from [dooboolab example reference](https://github.com/dooboolab/hackatalk-mobile/blob/master/STRINGS.ts)
 
 They used [react-native-localize](https://github.com/react-native-community/react-native-localize) and [i18n](https://github.com/fnando/i18n-js) libraries.
 There is a `getString(key: string)` method for easy translation.
