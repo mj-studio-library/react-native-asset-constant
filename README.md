@@ -3,7 +3,7 @@ There are shell scripts for generate asset(icon, string...) constants boilerplat
 
 There is only about icon, string currently, but I will add fonts etc... later
 
-## Icons - Needs
+## Icons - Purpose
 
 We may want to image asset like following
 
