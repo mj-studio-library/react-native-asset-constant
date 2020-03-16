@@ -1,7 +1,7 @@
 # react-native-asset-constant
 There are shell scripts for generate asset(icon, string...) constants boilerplate
 
-There is only about icon currently, but I will add string, fonts etc... later
+There is only about icon, string currently, but I will add fonts etc... later
 
 ## Icons - Needs
 
@@ -143,3 +143,129 @@ rm temp_image
 ```json
 "icon": "sh ./script/icon_constant.sh your/asset/path ./src/utils/Icons.ts",
 ```
+
+## Strings - Purpose
+
+```json
+{
+  "YES": "예",
+  "NO": "아니오",
+}
+```
+
+generates
+
+```ts
+import { getString } from '../../STRINGS';
+
+const Str = {
+  YES: getString('YES'),
+  NO: getString('NO'),
+};
+export default Str;
+
+```
+
+and use like this.
+
+<img src=https://github.com/mym0404/react-native-asset-constant/blob/master/stringasset.png>
+
+## Strings - Usage
+
+### 1. Prepare your json i18n file
+
+_ko.json_
+```json
+{
+  "YES": "예",
+  "NO": "아니오",
+  ...
+}
+```
+
+### 2. Prepare util methods from [dooboolab exmaple reference](https://github.com/dooboolab/hackatalk-mobile/blob/master/STRINGS.ts)
+
+They used [react-native-localize](https://github.com/react-native-community/react-native-localize) and [i18n](https://github.com/fnando/i18n-js) libraries.
+There is a `getString(key: string)` method for easy translation.
+
+_STRINGS.ts_
+```ts
+import * as Localization from 'react-native-localize';
+
+import i18n from 'i18n-js';
+import ko from './assets/langs/ko.json';
+
+const locales = Localization.getLocales();
+
+if (Array.isArray(locales)) {
+  i18n.locale = locales[0].languageTag;
+}
+
+i18n.fallbacks = true;
+i18n.translations = { ko };
+i18n.defaultLocale = 'ko';
+
+export const getString = (param: string, mapObj?: object): string => {
+  if (mapObj) {
+    return i18n.t(param, mapObj);
+  }
+  return i18n.t(param);
+};
+
+```
+
+### 3. Write command to `package.json` for run shell script.
+
+```json
+"string": "sh ./script/string_constant.sh ./assets/langs/ko.json ./src/utils/Strings.ts"
+```
+
+### 4. Copy shell script
+
+_script/string_constant.sh_
+```bash
+# arguments parse
+STRING_ASSET_FILE=$1
+STRING_UTIL_FILE=$2
+
+COUNT=0
+declare -a KEY_ARRAY
+
+PATTERN='".*": ".*"'
+
+
+while IFS= read -r line; do
+  if [[ $line =~ $PATTERN ]]; then
+
+    withoutNextLine="${line//\n/}"
+
+    keyName=$(echo $withoutNextLine| cut -d'"' -f 2)
+    echo $keyName
+    KEY_ARRAY[$COUNT]=$keyName
+    COUNT=$(expr $COUNT + 1)
+  fi
+done < $STRING_ASSET_FILE
+
+
+
+touch temp_string
+
+echo "import { getString } from '../../STRINGS';" >> temp_string
+echo "" >> temp_string
+
+echo "const Str = {" >> temp_string
+
+for ((i=0; i<COUNT; i++)); do
+  echo "  ${KEY_ARRAY[i]}: getString('${KEY_ARRAY[i]}')," >> temp_string
+done
+
+echo "};" >> temp_string
+
+echo "export default Str;" >> temp_string
+
+cp temp_string $STRING_UTIL_FILE
+rm temp_string
+
+```
+
+### 5. Enjoy!
