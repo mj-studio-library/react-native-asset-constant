@@ -6,7 +6,7 @@ There is only about icon, string currently, but I will add fonts etc... later
 ## Usage
 
 ```json
-"asset": "yarn run icon && yarn run string && eslint ./src/utils/Icons.ts --fix && eslint ./src/utils/Strings.ts --fix",
+"asset": "yarn run icon && yarn run string && prettier ./src/utils/Icons.ts --write && eslint ./src/utils/Icons.ts --fix && prettier ./src/utils/Strings.ts --write && eslint ./src/utils/Strings.ts --fix",
 "icon": "sh ./script/icon_constant.sh ./assets/icons ./src/utils/Icons.ts",
 "string": "sh ./script/string_constant.sh ./assets/langs/ko.json ./src/utils/Strings.ts",
 ```
