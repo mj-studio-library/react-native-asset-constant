@@ -3,6 +3,14 @@ There are shell scripts for generate asset(icon, string...) constants boilerplat
 
 There is only about icon, string currently, but I will add fonts etc... later
 
+## Usage
+
+```json
+"asset": "yarn run icon && yarn run string && eslint ./src/utils/Icons.ts --fix && eslint ./src/utils/Strings.ts --fix",
+"icon": "sh ./script/icon_constant.sh ./assets/icons ./src/utils/Icons.ts",
+"string": "sh ./script/string_constant.sh ./assets/langs/ko.json ./src/utils/Strings.ts",
+```
+
 ## Icons - Purpose
 
 We may want to image asset like following
